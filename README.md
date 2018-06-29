@@ -1,279 +1,96 @@
 
-# Booleans, Operators & Conditionals
+# Python Strings - Reloaded
 
-Boolean values are generally `True` and `False` in Python. In fact, boolean values are used heavily in programming languages since they all eventually compile to binary code -- like in the matrix.
+Strings (otherwise known as text) is a very important datatype in programming. Because strings are such a big part of programming and Python, there are a lot of ways to use them and many built-in methods that Python provides for us to use with them.
 
-![matrix](matrix_binary.png)
+## Formatting Strings
 
-Binary code is just `0`s and `1`s, On and Off, Yes and No, or *True* and *False*. 
+First thing we should talk about is the ways we can format strings. After all, we are programmers and we will usually need to make our strings programmatic. There are two main forms of combining and formatting strings called concatenation and interpolation. 
 
-In Python as with many other languages, there are things that are not purely `True` or `False`, but their value can be treated as `True` or `False`. We call these ***Truthy*** and ***Falsy***. So, while the value of the number `1` is not specifically `True`, it is Truthy (as are all other positive and negative intergers). Conversely, while the value of the number `0` is not specifically `False`, it is Falsy. We can test this with the `bool` operator, which returns to us the Boolean value of something (i.e. a truthy element returns True and a Falsy element returns False).
+**Concatenation** is the operation of joining strings end-to-end. When we concatenate two strings, we are basically adding them together. So, if I have one string, `"Hello, my name is"`, and a second string, `"Terrance!"`, I can concatenate them together and make one longer string.
 
-## bool() operator
-
-
-```python
-# testing truthiness and falsiness
-print('1.', bool(True)) # True
-print('2.', bool(False)) # False
-print('3.', bool(1)) # True 
-print('4.', bool(0)) # False
-```
+**Interpolation** is the insertion of string variables into parts of an existing string. When we interpolate, we mark where we would like to insert values into a string (like placeholders), and then pass the values to the string, resulting in a string where the placeholders are replaced with their corresponding string values. In Python it would look something like this: `"Hi, my name is {}".format("Terrance!")` which would yield "Hello, my name is Terrance!"
 
 
 ```python
-# less obvious examples
-print('1.', bool("hello")) # string 'hello' - True
-print('2.', bool([])) # empty list - False
-print('3.', bool(-300)) # negative number - True
-print('4.', bool("")) # empty string - False
+name = "Terrance!"
+print("Hello, my name is %s" % (name)) # interpolation
+print("Hello, my name is " + name) # concatenation
+print("Hello, my name is {name}".format(name=name)) # interpolation
+print(f"Hello, my name is {name}") # interpolation with f-strings - newest method as of Python 3.6
 ```
 
-Here is a list of all the falsy values in Python:
+As we can see there are 4 different was to format strings in python! That can be pretty confusing. So, in general we should choose one method and stick to it. 
 
-*for now, the bolded examples are most important*
-* **None**
-* **False**
-* **zero** of any numeric type, for example, **0**, 0L, **0.0**, 0j.
-* **any empty sequence**, for example, **'', (), []**.
-* **any empty mapping or dictionary**, for example, **{}**.
-* instances of user-defined classes, if the class defines a `__nonzero__()` or `__len__()` method, when that method returns the integer zero or bool value False.
+If we're simply combining a few strings end to end, concatenating them is the way to go (the one with the `+` signs).
 
-A list of all falsy values and more information on Booleans in Python can be found [here]('https://docs.python.org/2/library/stdtypes.html').
+However, if we are interpolating we have three options. As with everything in Python and programming, it is important to have a reason behind every decision. A reason to not use the `%s` method would be that it can quickly become confusing if we have more than one element to interpolate since our markers for interpolation are just a non-descript symbol (`%s`). So, if we eliminate the first method of interpolation, we are left with the last two. There are benefits to both. 
 
-## Other things that return Boolean values - Comparison Operators
+`f-strings` or `string literals` allow you to directly interpolate strings and functions. You can more easily separate the things you want to interpolate so that it is not all bunched together, and maybe more significantly f-strings are much faster than other forms of string interpolation. However, the f-string is new to python as of version 3.6. So, they may not be supported on all applications. 
 
-Comparison operators (or Relational operators) have a return value that is either True or False. In Python, comparison operators are:
-```python
-== # tests equality between two elements
-!= # tests inequality between two elements
-<, >, <=, >= # each tests the value between two elements
-```
-Perhaps the last line's operators are a little more familiar because we've seen these operators in math classes. But the first two might be bit more confusing, so, let's dive into those first.
-
-The double equals operator (==) is testing whether the value of element1 is equal to that of element2.
-```python 
-False == True # returns False
-False == False # returns True
-10 == 20 # returns False
-10 == 10 # returns True
-"hi" == "HI" # returns False
-"heLLo" == "heLLo" # returns True
-```
-
-The bang equals operator (!=) is testing whether the value of element1 is **not** equal to that of element2.
-
-```python 
-True != True # returns False
-True != False # returns True
-10 != 20 # returns True
-10 != 10 # returns False
-"hi" != "HI" # returns True
-"heLLo" != "heLLo" # returns False
-```
-
-
+the `.format` method is also a good way of interpolating with strings. We simply choose where you would like to have a value interpolated and mark it with the double curly braces `{}`. Optionally, we can define a variable name inside the curly braces, `{name}`. Then, we give the `.format` method the arguments necessary. If we do not define a variable name (i.e. "hello my name is {}".format("Terrance")), then we just give the value we want to be interpolated. If we do decide to define a variable, (i.e. "hello my name is {name}".format(name="Terrance")), then we will need to tell our `.format` method what value to assign to each variable.
 
 
 ```python
-print('1.', True != True) # False
-print('2.', False == True) # False
-print('3.', 10 == 10) # True
-print('4.', "hi" == "HI") # False
-print('5.', type(0) == int) # True
-print('6.', ["hi"] == ["hi"]) # True
-```
+# f-string interpolation
+name = "Terrance"
+language = "Python"
+home_state = "New York"
+def borough_name():
+    return "Brooklyn"
 
-The greater than (`>`), less than (`<`), greater than or equal to (`>=`) and less than or equal (`<=`) to operators also only return True or False from an operation.
-
-
-```python
-print('1.', True > True) # False
-print('2.', True >= True) # True
-print('3.', 10 <= 10) # True
-print('4.', 7 < 7) # False
-print('5.', 10 < 100) # True
-print('6.', 100 > 101) # False
-# you can even compare strings to see which is alphabetically greater or less than
-# a string is greater than if it comes after another string alphabetically (or if its ascii value is greater)
-# capital letters have lower ascii values (come earlier in the alphabet) than their lowercase letter counterparts
-print('7.', "A" < "a") # True 
-print('8.', "aaron" > "alexa") # False
-print('9.', "Terrance" > "Teresa") # True
-```
-
-## Logical Operators
-
-The next group of operators are logical operators. They compare truthy/falsy values. The operators are:
-```python
-and 
-# Compares two elements. If both elements are truthy, the second element is returned
-# If there is a falsy value, the first falsy value is returned
-
-or 
-# Compares two elements. The first truthy element is returned. 
-# If both elements are falsy, the second element is returned
-
-not 
-# returns a boolean value that is opposite of truthy/falsy value of the element
-```
-Let's see these in action:
-
-*try to guess what the values will be before running the code - write your answers in a comment next to the print statement*
-
-
-```python
-print("1.", 2 and 0) #
-print("2.", False and 2) #
-print("3.", True and 2) #
-print("4.", 2 and 3) #
-print("5.", 2 or []) #
-print("6.", 0 or []) #
-print("7.", not False) #
-print("8.", not True) #
-print("9.", not []) #
-print("10.", not 0) #
-print("11.", not 100) #
-```
-
-## Identity Operators
-
-The next type of operators are identity operators, `is` and `is not`. They check to see if one element is or is not the other element. This is similar to `!=` and `==`. However there is one key difference. The `!=` and `==` check to see if the value of each element is the same, however, the `is` and `is not` operators check to see if the elements are the same element. 
-
-Let's check it out:
-
-*again, try to find the correct return value for each example and write the answer in a comment next to the print statement*
-
-
-```python
-x = {'name': "example"}
-b = x
-c = {'name': "example"}
-print("1.", {} is {}) #
-print("1A.", {} == {}) #
-print("2.", [] is []) #
-print("3.", "Hi" is "Hi") #
-print("4.", ["same"] is ["same"]) #
-print("4A.", ["same"] == ["same"]) #
-print("5.", 9 is not 10) #
-print("6.", x is b) #
-print("7.", b is c) #
-print("7A.", b == c) #
-print("8.", x is not c) #
-```
-
-As we can see, the `is` and `is not` operators are checking to see if the objects are exactly the same object in memory. However, the `==` and `!=` operators are simply checking to see if the value of each element is the same. This will become clearer as we learn more about how python stores data. 
-
-All objects are stored in a specific place in memory, we can think of this as an address on the computer. All objects have their own unique address. When we use the `is` or `is not` operator, we are checking to see if the address of the object is the same as another object. When we use the `==` or `!=` operators, we are checking to see if they are basically equal in value, irrespective of whether they are the same or two different objects.
-
-## Ternary Operator
-
-The next operator is the Ternary. It is a bit more of a complicated operator, but it can be very useful when you would like to decide which value to assign to a variable. Ternaries are good for one-line conditions, but anything more complex makes ternary operators quite difficult to read. Let's check it out:
-
-
-```python
-my_condition = True
-value = 10 if my_condition else 1000
-print(value)
+f"Hi, my name is {name}! I love coding, especially in {language}. I live in {borough_name()}, {home_state}"
+# here we can see that we don't need to worry about passing arguments or defining variables inside our string
+# we can also call functions and perform any normal python operations inside the curly braces
 ```
 
 
 ```python
-# let's say we are receiving two variables with different 
-# values and we want to assign the higher value to a new variable
-x = 12
-y = 20
-new_variable = x if x > y else y
-# here we are saying, take the value of x if it is greater than the value of y. else take the value of y
-# since x > y evaluates to false, the ternary returns the value after the else statement
-print(new_variable)
-```
-
-## Conditionals
-
-The conditonal operators in python are:
-```python
-if
-elif
-else
-```
-The `if` and `elif` statements check to see if a condition is met. The first part of any conditional is always an `if`. The `elif` and `else` statements aren't always required when writing a conditional statement, but they **do** always require being preceded by an `if`. The block of code that follows an `if` is only executed if the condition is met, the same goes for an `elif` statement. The block of code that follows an `else` is only executed if the preceding conditions for the `if` and `elif` statemtents were not met.
-
-
-```python
-x = True
-y = False
-if x:
-    print("If statement executed")
-elif x:
-    print("elif statement executed")
-else:
-    print("else statement executed")
+# .format() interpolation
+name = "Terrance"
+language = "Python"
+home_state = "New York"
+"Hi, my name is {name}! I love coding, especially in {lang}. I live in {location}, {location}".format(lang=language, location=home_state, name=name)
+# here we can see that we need to name our arguments in the .format function what we call our variables
+# in the string itself. Order does not matter here, and we can use the same variable multiple times.
 ```
 
 
 ```python
-x = True
-y = False
-if y:
-    print("If statement executed")
-elif x:
-    print("elif statement executed")
-else:
-    print("else statement executed")
+# .format() interpolation
+name = "Terrance"
+language = "Python"
+home_state = "New York"
+"Hi, my name is {} I love coding, especially in {}. I live in {}, {}".format(name, language, "New York City", home_state)
+# here we can see that the order of arguments matters and that we need the exact number of arguments as we have {}
 ```
 
+Now that we know how to interpolate and concatenate strings, let's talk about the different kinds of string methods we have available to us. 
 
-```python
-x = True
-y = False
-if y:
-    print("If statement executed")
-elif y:
-    print("elif statement executed")
-else:
-    print("else statement executed")
-```
+There are many methods that are built-in to python for strings. Some of the most common string methods are below:
 
+* [format()]('https://www.programiz.com/python-programming/methods/string/format') - (we already used this one above!)
+* [split()]('https://www.programiz.com/python-programming/methods/string/split')
+* [join()]('https://www.programiz.com/python-programming/methods/string/join')
+* [find()]('https://www.programiz.com/python-programming/methods/string/find')
+* [count()]('https://www.programiz.com/python-programming/methods/string/count')
+* [startswith()]('https://www.programiz.com/python-programming/methods/string/endswith')
+* [endswith()]('https://www.programiz.com/python-programming/methods/string/startswith')
+* [replace()]('https://www.programiz.com/python-programming/methods/string/replace')
+* [strip()]('https://www.programiz.com/python-programming/methods/string/strip')
+* [upper()]('https://www.programiz.com/python-programming/methods/string/upper')
+* [lower()]('https://www.programiz.com/python-programming/methods/string/lower')
+* [title()]('https://www.programiz.com/python-programming/methods/string/title')
+* [casefold()]('https://www.programiz.com/python-programming/methods/string/casefold')
 
-```python
-x = True
-y = False
-if x and y:
-    print("If statement executed")
-elif "hey" or y:
-    print("elif statement executed")
-else:
-    print("else statement executed")
-```
+Many of the names can be used to infer what functionality they provide, but click on the links and peruse the documentation if you want to learn more and see the full functionality of these methods. 
 
+## Practicing With Strings
 
-```python
-if 0:
-    print("If statement executed")
-elif [] or "":
-    print("elif statement executed")
-else:
-    print("else statement executed")
+Now that we have a more of an understanding of how string formating works and what built in methods we can use, let's practice our skills by writing some functions.
 
-```
+Open up the string_functions.py file and follow along with the comments which detail the functionality each should have. Run the tests to make sure your functions will work with any example.
 
+## Summary
 
-```python
-# We can even NEST our if/elif/else statements!
-x = True
-y = False
-if y:
-    print("If statement executed")
-elif [] or 100:
-    if [] and True:
-        print("Oh no... I don't get executed")
-    elif "NESTING, OH YEAH":
-        print("Woo! I get executed")
-else:
-    print("else statement executed")
-```
-
-# Summary
-
-Boolean values and truthy/falsy values are heavily leveraged to make sure our programs are running properly and it is paramount to understand how to use these tools in order to make our programs as dynamic and clean as possible -- True or False? True!
+In this lab we introduced the basics of how strings work and what methods we have available to us when we are working with strings in Python. Then we put those skills to the test by defining functions that used some of these methods to alter and format strings for our own uses. This is a common need of any good programmer to make sure that their application only accepts information in a uniform format, as well as guard against information coming into the program that might be malicious.
