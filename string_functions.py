@@ -18,7 +18,6 @@ def remove_duplicate_punctuation(string):
     pass
 
 
-
 def validate_email_format(email):
     # should make sure there are no special characters (i.e. *,~,#,$,%,&,(,),`,",',:,;,/,>,<)
     # make sure the email contains an @ symbol and a .com
